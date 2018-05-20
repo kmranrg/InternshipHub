@@ -30,16 +30,16 @@
 			<div class="container">
 				<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
 					<h2>SIGN UP</h2>
-					<form action="signup_script.php" method="POST">
+					<form method="POST">
 						<div class="form-group">
-							<input class="form-control" placeholder="Organisation Name" name="organisation" required="true" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$">
+							<input class="form-control" placeholder="Organisation Name" name="org" required="true" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$">
 						</div>
 
 						<div class="form-group">
 							<input class="form-control" placeholder="Employee Name" name="name" required="true" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$">
 						</div>
 						<div class="form-group">
-							<input type="email" class="form-control" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name="e-mail" required="true">
+							<input type="email" class="form-control" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name="email" required="true">
 							<?php echo @$_GET['m1']; ?>
 						</div>
 						<div class="form-group">
@@ -52,7 +52,15 @@
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder="City" name="city" required="true">
 						</div>
-						<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" name="submit" value="sub" class="btn btn-primary">Submit</button>
+						<?php
+								if ( ( @$_POST[ "submit" ] ) == "sub" ) 
+								{
+									//for inserting the record
+									include("includes/insert.php");
+									emprecord();
+								}
+						?>
 					</form>
 				</div>
 			</div>
