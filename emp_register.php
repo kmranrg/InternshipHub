@@ -54,12 +54,11 @@
 						</div>
 						<button type="submit" name="submit" value="sub" class="btn btn-primary">Submit</button>
 						<?php
-								if ( ( @$_POST[ "submit" ] ) == "sub" ) 
-								{
-									//for inserting the record
-									include("includes/insert.php");
-									emprecord();
-								}
+						if ( ( @$_POST[ "submit" ] ) == "sub" ) {
+							//for inserting the record
+							include( "includes/insert.php" );
+							emprecord();
+						}
 						?>
 					</form>
 				</div>
