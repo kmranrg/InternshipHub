@@ -1,18 +1,24 @@
 <?php
+session_start();
+
+
 $dblink = mysqli_connect( "localhost", "root", "", "internships" );
-$query = "select * from internship";
-$stu_query = "select * from student";
+if ( $_GET[ 'id' ] == NULL ) {
+	header( "Location:index.php" );
+}
+$query = "select * from internship where id = '" . $_GET[ 'id' ] . "'";
 $result = mysqli_query( $dblink, $query );
-$stu_result = mysqli_query( $dblink, $stu_query );
-$data = array();
+$row = mysqli_fetch_assoc( $result );
 ?>
 <!doctype html>
 <html>
 
 <head>
 	<meta charset="utf-8">
-	<title>Internshala</title>
+	<title>Internship</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
 
 	<style>
 		<?php include 'css/master.css';
@@ -23,60 +29,71 @@ $data = array();
 
 <body>
 
-	<?php 
-		include("includes/header.php"); 
+	<?php
+	include( "includes/header_intern.php" );
 	?>
+	<div class="container" style="margin-left: 20px;">
+		<h1>
+			<?php echo $row['title']; ?>
+		</h1>
+		<h3>
+			&ensp;&ensp;by <?php echo $row['orgname']; ?><br/>
+		</h3>
+	
+		<h3>
+			<img src="img/banners/<?php echo $row['imglink']; ?>"
+			
+		</h3>
+	
 
-	<div class="container">
+		<h3>
+			<br/>Description:<br/><br/>
+			
+		</h3>
+	
+		<h5>
+			<?php echo $row['description']; ?>
+		</h5>
 
-
-		<div class="row">
-			<?php
-			$i = 0;
-			while ( $row = $result->fetch_assoc() ) {
-				$data[ $i ] = $row;
-				if ( ( $i % 3 ) == 0 ) {
-					echo '</div>  <div class="row">';
-				}
-				?>
-			<div class="col-md-4" style="padding:0px;margin-top:20px;">
-				<div class="carousel-img">
-					<img src="https://c.wallhere.com/photos/70/bc/Frontside_Misty_Counter_Strike_Global_Offensive_colorful_weapon_military_AKM-55873.jpg!d" width="90%">
-				</div>
-				<div class="author">
-					<div class="img_author">
-						<img src="{{asset('images/temp.jpg')}}" width="90%">
-					</div>
-					<span class="auth_name">
-                 <h4><strong>          <?php echo $data[$i]['title'];  ?> </strong><br><small><?php echo $data[$i]['orgname']; ?></small> </h4>
-              </span>
-				</div>
-				<div class="carousel-content" style="width: 90%">
-					<h6><strong>Description</strong></h6>
-					<p>
-						<?php echo $data[$i]['description'];  ?>
-					</p>
-					<?php $v = $data[$i]['id']; ?>
-					<a href="internship_details.php?id=<?php echo $v; ?>" name="apply" value="apply" class="btn btn-block btn-primary">Apply Now</a>
-				</div>
-
-			</div>
-
-
-
-			<?php
-			$i++;
-			}
-			?>
-
-		</div>
-
+		<h5>
+			<br/><br/>Starting Date : <?php echo $row['startdate']; ?> <br/>
+			Ending Date : <?php echo $row['enddate']; ?> <br/>
+		</h5>
+	
+		<h5>
+			<br/><br/>Salary: INR <?php echo $row['salary']; ?> <br/>
+		</h5>
+	
+		<h5>
+			<br/>Location : <?php echo $row['location']; ?> <br/>
+		</h5>
+	
+		<form action="" method="post">
+			<center>
+				<button type="submit" class="btn btn-success" name="apply" value="apply">Apply</button><br/><br/><br/>
+			</center>
 	</div>
 
 
-	<?php 
-		include("includes/footer.php"); 
+
+	</form>
+	<?php
+	if ( isset( $_POST[ "apply" ] ) ) {
+		if ( @$_SESSION[ "id" ] == NULL ) {
+			echo '<script>window.alert("Please Login");</script>';
+		} else {
+			include("includes/insert.php");
+			appliedrecord();
+
+		}
+
+	}
+
 	?>
+	<?php
+	include( "includes/footer.php" );
+	?>
+
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
@@ -103,6 +120,8 @@ $data = array();
 			$( "#login-email" ).attr( "placeholder", "Employee email" );
 		} );
 	</script>
+
+
 </body>
 
 </html>

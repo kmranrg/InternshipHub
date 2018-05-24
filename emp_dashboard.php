@@ -1,5 +1,5 @@
 <?php
-//after session out page will redirect to login page
+//after session out page will redirect to main page
 session_start();
 if ( !isset( $_SESSION[ "email" ] ) ) {
 	header( "Location:index.php" );
@@ -9,6 +9,7 @@ $db = mysqli_connect( "localhost", "root", "", "internships" );
 @$UID = $_SESSION[ "email" ];
 $res = mysqli_query( $db, "select * from employee where email='" . $UID . "'" );
 $row = mysqli_fetch_assoc( $res );
+$intern_res = mysqli_query( $db, "select * from internship where orgname='" . $row[ 'orgname' ] . "'" );
 ?>
 
 
@@ -98,6 +99,8 @@ $row = mysqli_fetch_assoc( $res );
 	
 
 
+
+
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav">
 				<li class="nav-item">
@@ -114,17 +117,68 @@ $row = mysqli_fetch_assoc( $res );
 					<a class="nav-link js-scroll-trigger" id="publish" href="#">Publish Internship</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link js-scroll-trigger" id="logout" href="#">Log-out</a>
+					<a class="nav-link js-scroll-trigger" id="logout" href="index.php">Log-out</a>
 				</li>
+				<br/><br/><br/><br/><br/><br/><br/>
+				<div class="container" style="color: white">
+					<center>
+						<p>Copyright &copy; Internshala</p>
+					</center>
+				</div>
 			</ul>
 		</div>
 	</nav>
 	<div class="right-ct">
 		<div class="jumbotron" id="about-ct">
 			<h1>
-				<?php echo $row['name'];?>
+				<?php echo $row["name"];?>
 			</h1>
+			<h5>
+				Your posted Internships
+			</h5>
+		
+			<!--			//internships-->
+			<div class="container">
+
+
+				<div class="row">
+					<?php
+					$i = 0;
+					while ( $intern_row = $intern_res->fetch_assoc() ) {
+						$data[ $i ] = $intern_row;
+						if ( ( $i % 3 ) == 0 ) {
+							echo '</div>  <div class="row">';
+						}
+						?>
+					<div class="col-md-4" style="padding:0px;margin-top:20px;">
+						<div class="carousel-img">
+							<img src="https://c.wallhere.com/photos/70/bc/Frontside_Misty_Counter_Strike_Global_Offensive_colorful_weapon_military_AKM-55873.jpg!d" width="90%">
+						</div>
+						<div class="author">
+							<span class="auth_name">
+                 <h4><strong>          <?php echo $data[$i]['title'];  ?> </strong><br><small><?php echo $data[$i]['orgname']; ?></small> </h4>
+              </span>
+						</div>
+						<div class="carousel-content" style="width: 90%">
+							<h6><strong>Description</strong></h6>
+							<p>
+								<?php echo $data[$i]['description'];  ?>
+							</p>
+						</div>
+					</div>
+
+
+
+					<?php
+					$i++;
+					}
+					?>
+
+				</div>
+			</div>
 		</div>
+
+
 		<div class="jumbotron hidden" id="update-ct">
 			<h1>This is update page</h1>
 		</div>

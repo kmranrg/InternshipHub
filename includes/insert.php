@@ -35,6 +35,9 @@ function emprecord() {
 
 function internshiprecord() {
 	$dt = mysqli_connect( "localhost", "root", "", "internships" );
+	@$UIDX = $_SESSION[ "email" ];
+	$resx = mysqli_query( $dt, "select * from employee where email='" . $UIDX . "'" );
+	$rowx = mysqli_fetch_assoc( $resx );
 
 	if ( isset( $_POST[ "submit" ] ) ) {
 		$title = $_POST[ "title" ];
@@ -42,7 +45,6 @@ function internshiprecord() {
 		$sdate = $_POST[ "sdate" ];
 		$edate = $_POST[ "edate" ];
 		$city = $_POST[ "city" ];
-		@$org = $row[ 'orgname' ];
 		$salary = $_POST[ 'salary' ];
 
 		//file upload
@@ -78,7 +80,20 @@ function internshiprecord() {
 
 		//end of file upload
 
-		if ( mysqli_query( $dt, "INSERT INTO `internship` (`id`, `views`, `orgname`, `title`, `description`, `startdate`, `enddate`, `location`, `salary`, `imglink`) VALUES (NULL, '0', '" . $org . "', '" . $title . "', '" . $descp . "', '" . $sdate . "', '" . $edate . "', '" . $city . "', '" . $salary . "', '" . $fileName . "');" ) ) {
+		if ( mysqli_query( $dt, "INSERT INTO `internship` (`id`, `views`, `orgname`, `title`, `description`, `startdate`, `enddate`, `location`, `salary`, `imglink`) VALUES (NULL, '0', '" . $rowx[ 'orgname' ] . "', '" . $title . "', '" . $descp . "', '" . $sdate . "', '" . $edate . "', '" . $city . "', '" . $salary . "', '" . $fileName . "');" ) ) {
+			echo '<script>window.alert("Successfully submitted");</script>';
+		}
+	}
+}
+
+function appliedrecord() {
+	$dt = mysqli_connect( "localhost", "root", "", "internships" );
+
+	if ( isset( $_POST[ "apply" ] ) ) {
+		$stu_id = $_SESSION[ "id" ];
+		$emp_id = $_GET[ 'id' ];
+
+		if ( mysqli_query( $dt, "INSERT INTO `applied` (`student_id`, `internship_id`) VALUES ('" . $stu_id . "', '" . $emp_id . "');" ) ) {
 			echo '<script>window.alert("Successfully submitted");</script>';
 		}
 	}
