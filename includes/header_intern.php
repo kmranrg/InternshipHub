@@ -83,7 +83,7 @@
 				if ( ( @$_POST[ "signin" ] ) == "signin" ) {
 					//for inserting the record
 					include( "authenticate.php" );
-					authentication();
+					stu_authentication();
 				}
 				?>
 			</div>
