@@ -4,7 +4,6 @@ session_start();
 if ( !isset( $_SESSION[ "email" ] ) ) {
 	header( "Location:index.php" );
 }
-
 $db = mysqli_connect( "localhost", "root", "", "internships" );
 @$UID = $_SESSION[ "email" ];
 $res = mysqli_query( $db, "select * from employee where email='" . $UID . "'" );
@@ -12,17 +11,13 @@ $row = mysqli_fetch_assoc( $res );
 $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $row[ 'orgname' ] . "'" );
 ?>
 
-
-
 <html lang="en">
 
 <head>
 
-
-
 	<!-- Required meta tags -->
-	<!--  <meta http-equiv="refresh" content="3">-->
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Bootstrap CSS -->
 	<style media="screen">
@@ -89,17 +84,14 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 
 </head>
 
-<body>
+<body style="background-color: #e9ecef">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">
 		<a class="navbar-brand js-scroll-trigger" href="#page-top">
           <span class="d-none d-lg-block">
-		  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded" height="100px" width="100px"></img>
+		  <img src="http://www.free-icons-download.net/images/male-user-logo-icon-65890.png" class="rounded" height="100px" width="100px"></img>
       </span>
     </a>
 	
-
-
-
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav">
@@ -137,7 +129,7 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 				Your posted Internships
 			</h5>
 		
-			<!--			//internships-->
+
 			<div class="container">
 
 
@@ -152,7 +144,7 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 						?>
 					<div class="col-md-4" style="padding:0px;margin-top:20px;">
 						<div class="carousel-img">
-							<img src="https://c.wallhere.com/photos/70/bc/Frontside_Misty_Counter_Strike_Global_Offensive_colorful_weapon_military_AKM-55873.jpg!d" width="90%">
+							<img src="img/banners/<?php echo $data[$i]['imglink']; ?>" width="90%">
 						</div>
 						<div class="author">
 							<span class="auth_name">
@@ -167,8 +159,6 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 						</div>
 					</div>
 
-
-
 					<?php
 					$i++;
 					}
@@ -180,7 +170,52 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 
 
 		<div class="jumbotron hidden" id="update-ct">
-			<h1>This is update page</h1>
+			<h1>Profile</h1><br/>
+			<form class="form-horizontal" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="text" class="form-control" id="title" name="orgname" value="<?php echo $row['orgname']; ?>" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="text" class="form-control" id="title" name="name" value="<?php echo $row['name']; ?>" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="text" class="form-control" id="title" name="email" value="<?php echo $row['email']; ?>" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="text" class="form-control" id="title" name="password" value="<?php echo $row['password']; ?>" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="text" class="form-control" id="title" name="contact" value="<?php echo $row['contact']; ?>" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="text" class="form-control" id="title" name="city" value="<?php echo $row['city']; ?>" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-12">
+						<button type="submit" name="update" value="update" class="btn btn-success">Update</button>
+					</div>
+					<?php
+					if ( ( @$_POST[ "update" ] ) == "update" ) {
+						//for updating the record
+						include( "includes/update.php" );
+						emp_record();
+					}
+					?>
+				</div>
+			</form>
 		</div>
 
 		<div class="jumbotron hidden" id="publish-ct">
@@ -261,8 +296,6 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 				</div>
 			</form>
 		</div>
-
-
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

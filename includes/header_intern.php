@@ -9,26 +9,12 @@
   					<span class="caret"></span>
   				</button>
 			
-
-
 				<ul class="dropdown-menu">
 					<li><a href="stu_register.php">As Student</a>
-
-
-
 					
-
-
-
 					</li>
 					<li><a href="emp_register.php">As Employee</a>
-
-
-
 					
-
-
-
 					</li>
 				</ul>
 			</div>
@@ -62,7 +48,6 @@
 	
 
 
-
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<span class="input-group-text">@</span>
@@ -73,7 +58,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text"><img src="img/credentials/key.svg" height="15px" > </span>
 			</div>
-			<input type="text" class="form-control" name="password" placeholder="Password">
+			<input type="password" class="form-control" name="password" placeholder="Password">
 		</div>
 		<div class="form-group">
 			<div class="col-sm-10">

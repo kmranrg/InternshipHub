@@ -80,7 +80,7 @@ function internshiprecord() {
 
 		//end of file upload
 
-		if ( mysqli_query( $dt, "INSERT INTO `internship` (`id`, `views`, `orgname`, `title`, `description`, `startdate`, `enddate`, `location`, `salary`, `imglink`) VALUES (NULL, '0', '" . $rowx[ 'orgname' ] . "', '" . $title . "', '" . $descp . "', '" . $sdate . "', '" . $edate . "', '" . $city . "', '" . $salary . "', '" . $fileName . "');" ) ) {
+		if ( mysqli_query( $dt, "INSERT INTO `internship` (`id`, `orgname`, `title`, `description`, `startdate`, `enddate`, `location`, `salary`, `imglink`) VALUES (NULL, '" . $rowx[ 'orgname' ] . "', '" . $title . "', '" . $descp . "', '" . $sdate . "', '" . $edate . "', '" . $city . "', '" . $salary . "', '" . $fileName . "');" ) ) {
 			echo '<script>window.alert("Successfully submitted");</script>';
 		}
 	}
@@ -88,14 +88,23 @@ function internshiprecord() {
 
 function appliedrecord() {
 	$dt = mysqli_connect( "localhost", "root", "", "internships" );
+	$stu_id = ( int )$_SESSION[ "id" ];
+	$intern_id = ( int )$_GET[ 'id' ];
+	$query = "select * from applied where student_id = $stu_id and internship_id = $intern_id ";
+	$result = mysqli_query( $dt, $query );
+	$count = mysqli_num_rows( $result );
+
 
 	if ( isset( $_POST[ "apply" ] ) ) {
-		$stu_id = $_SESSION[ "id" ];
-		$emp_id = $_GET[ 'id' ];
 
-		if ( mysqli_query( $dt, "INSERT INTO `applied` (`student_id`, `internship_id`) VALUES ('" . $stu_id . "', '" . $emp_id . "');" ) ) {
-			echo '<script>window.alert("Successfully submitted");</script>';
+		if ( $count == 0 ) {
+			if ( mysqli_query( $dt, "INSERT INTO `applied` (`student_id`, `internship_id`) VALUES ('" . $stu_id . "', '" . $intern_id . "');" ) ) {
+				echo '<script>window.alert("Successfully submitted");</script>';
+			}
+		} else {
+			echo '<script>window.alert("Already registered");</script>';
 		}
+
 	}
 }
 

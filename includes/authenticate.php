@@ -17,7 +17,7 @@ function authentication() {
 			header( "Location:emp_dashboard.php" );
 		} else if ( $stu_row != NULL ) {
 			session_start();
-			$_SESSION[ "email" ] = $stu_row[ 'email' ];
+			$_SESSION[ "id" ] = $stu_row[ 'id' ];
 			header( "Location:stu_dashboard.php" );
 		} else {
 			echo '<script>window.alert("Either username or password is incorrect (or not filled)");</script>';
