@@ -16,9 +16,9 @@ $row = mysqli_fetch_assoc( $result );
 <head>
 	<meta charset="utf-8">
 	<title>Internship</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-
 
 	<style>
 		<?php include 'css/master.css';
@@ -45,7 +45,6 @@ $row = mysqli_fetch_assoc( $result );
 			
 		</h3>
 	
-
 		<h3>
 			<br/>Description:<br/><br/>
 			
@@ -54,7 +53,6 @@ $row = mysqli_fetch_assoc( $result );
 		<h5>
 			<?php echo $row['description']; ?>
 		</h5>
-
 		<h5>
 			<br/><br/>Starting Date : <?php echo $row['startdate']; ?> <br/>
 			Ending Date : <?php echo $row['enddate']; ?> <br/>
@@ -82,11 +80,9 @@ $row = mysqli_fetch_assoc( $result );
 		if ( @$_SESSION[ "id" ] == NULL ) {
 			echo '<script>window.alert("Please Login");</script>';
 		} else {
-			include("includes/insert.php");
+			include( "includes/insert.php" );
 			appliedrecord();
-
 		}
-
 	}
 
 	?>
@@ -120,7 +116,6 @@ $row = mysqli_fetch_assoc( $result );
 			$( "#login-email" ).attr( "placeholder", "Employee email" );
 		} );
 	</script>
-
 
 </body>
 

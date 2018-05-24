@@ -8,8 +8,6 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/master.css">
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/master.css">
 	<style>

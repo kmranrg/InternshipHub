@@ -1,27 +1,23 @@
 <?php
 //after session out page will redirect to main page
 session_start();
-if ( !isset( $_SESSION[ "email" ] ) ) {
+if ( !isset( $_SESSION[ "id" ] ) ) {
 	header( "Location:index.php" );
 }
 
 $db = mysqli_connect( "localhost", "root", "", "internships" );
-@$UID = $_SESSION[ "email" ];
-$res = mysqli_query( $db, "select * from student where email='" . $UID . "'" );
-$row = mysqli_fetch_assoc( $res );
-$intern_res = mysqli_query( $db, "select * from internship where orgname='" . $row[ 'orgname' ] . "'" );
+$UID = ( int )$_SESSION[ "id" ];
+$stu_res = mysqli_query( $db, "select * from student where id = $UID " );
+$stu_row = mysqli_fetch_assoc( $stu_res );
+$app_res = mysqli_query( $db, "select * from applied where student_id = $UID " );
+$intern_res = array();
 ?>
-
-
 
 <html lang="en">
 
 <head>
 
-
-
 	<!-- Required meta tags -->
-	<!--  <meta http-equiv="refresh" content="3">-->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Bootstrap CSS -->
@@ -86,20 +82,16 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 	</style>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
-
 </head>
 
-<body>
+<body style="background-color: #e9ecef">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">
 		<a class="navbar-brand js-scroll-trigger" href="#page-top">
           <span class="d-none d-lg-block">
-		  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded" height="100px" width="100px"></img>
+		  <img src="http://www.free-icons-download.net/images/male-user-logo-icon-65890.png" height="120px" width="120px"></img>
       </span>
     </a>
 	
-
-
-
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav">
@@ -111,10 +103,7 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 					<a class="nav-link js-scroll-trigger active" id="about" href="#">About</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link js-scroll-trigger" id="update" href="#">Update Profile</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link js-scroll-trigger" id="publish" href="#">Publish Internship</a>
+					<a class="nav-link js-scroll-trigger" id="profile" href="#">Update Profile</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link js-scroll-trigger" id="logout" href="index.php">Log-out</a>
@@ -131,45 +120,46 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 	<div class="right-ct">
 		<div class="jumbotron" id="about-ct">
 			<h1>
-				<?php echo $row["name"];?>
+				<?php echo $stu_row['name'];?>
 			</h1>
 			<h5>
-				Your posted Internships
+				Internships you have applied
 			</h5>
 		
-			<!--			//internships-->
+
 			<div class="container">
-
-
 				<div class="row">
 					<?php
 					$i = 0;
-					while ( $intern_row = $intern_res->fetch_assoc() ) {
-						$data[ $i ] = $intern_row;
-						if ( ( $i % 3 ) == 0 ) {
-							echo '</div>  <div class="row">';
-						}
-						?>
+					while ( $app_row = $app_res->fetch_assoc() ) {
+						$intern_res[ $i ] = mysqli_query( $db, "select * from internship " );
+						while ( $intern_row = $intern_res[ $i ]->fetch_assoc() ) {
+							if ( $intern_row[ 'id' ] == $app_row[ 'internship_id' ] ) {
+								if ( ( $i % 3 ) == 0 ) {
+									echo '</div>  <div class="row">';
+								}
+								?>
 					<div class="col-md-4" style="padding:0px;margin-top:20px;">
 						<div class="carousel-img">
-							<img src="https://c.wallhere.com/photos/70/bc/Frontside_Misty_Counter_Strike_Global_Offensive_colorful_weapon_military_AKM-55873.jpg!d" width="90%">
+							<img src="img/banners/<?php echo $intern_row['imglink']; ?>" width="90%">
 						</div>
+
+
 						<div class="author">
 							<span class="auth_name">
-                 <h4><strong>          <?php echo $data[$i]['title'];  ?> </strong><br><small><?php echo $data[$i]['orgname']; ?></small> </h4>
+                 <h4><strong>          <?php echo $intern_row['title'];  ?> </strong><br><small>by&ensp;<?php echo $intern_row['orgname']; ?></small> </h4>
               </span>
 						</div>
 						<div class="carousel-content" style="width: 90%">
 							<h6><strong>Description</strong></h6>
 							<p>
-								<?php echo $data[$i]['description'];  ?>
+								<?php echo $intern_row['description'];  ?>
 							</p>
 						</div>
 					</div>
-
-
-
 					<?php
+					}
+					}
 					$i++;
 					}
 					?>
@@ -178,84 +168,45 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 			</div>
 		</div>
 
-
-		<div class="jumbotron hidden" id="update-ct">
-			<h1>This is update page</h1>
-		</div>
-
-		<div class="jumbotron hidden" id="publish-ct">
-			<h1>Internship Details</h1>
+		<div class="jumbotron hidden" id="my-profile">
+			<h1>My Profile</h1>
 			<br/>
 			<form class="form-horizontal" method="post" enctype="multipart/form-data">
 				<div class="form-group">
 					<div class="col-sm-12">
-						<input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" required>
+						<input type="text" class="form-control" id="title" name="name" value="<?php echo $stu_row['name']; ?>" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
-						<textarea class="form-control" rows="5" id="descp" name="descp" placeholder="Enter Description" required></textarea>
+						<input type="text" class="form-control" id="title" name="email" value="<?php echo $stu_row['email']; ?>" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
-						<input type="text" class="form-control" id="organisation" readonly value="<?php echo $row['orgname'];?>" placeholder="Enter Title" required>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-sm-12">
-						<input type="text" class="form-control" id="start-date" name="sdate" placeholder="Start date (dd-mm-yyyy)" required>
+						<input type="text" class="form-control" id="title" name="password" value="<?php echo $stu_row['password']; ?>" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
-						<input type="text" class="form-control" id="end-date" name="edate" placeholder="End date (dd-mm-yyyy)" required>
+						<input type="text" class="form-control" id="title" name="contact" value="<?php echo $stu_row['contact']; ?>" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
-						<select class="form-control" name="city" id="city" required>
-							<option>--Select Location--</option>
-							<option value="New Delhi">New Delhi</option>
-							<option value="Bengluru">Bengluru</option>
-							<option value="Kolkata">Kolkata</option>
-							<option value="Hyderabad">Hyderabad</option>
-						</select>
+						<input type="text" class="form-control" id="title" name="city" value="<?php echo $stu_row['city']; ?>" required>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-12">
-						<div class="checkbox">
-							<label><input name="paid-type"  id="paid" type="Radio" required> Paid</label>
-							<label><input name="paid-type" id="unpaid" type="Radio" required> Unpaid</label>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-12">
-						<input type="text" class="form-control" id="payment" name="salary" value="0" placeholder="Salary">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="fileToUpload" class="col-sm-12">Select Banner:</label>
-					<div class="col-sm-12">
-						<input type="file" name="file" id="fileToUpload" required>
-					</div>
-				</div>
-
-
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-12">
-						<button type="submit" name="submit" value="submit" class="btn btn-success">Submit</button>
+						<button type="submit" name="update" value="update" class="btn btn-success">Update</button>
 					</div>
 					<?php
-					if ( ( @$_POST[ "submit" ] ) == "submit" ) {
-						//for inserting the record
-						include( "includes/insert.php" );
-						internshiprecord();
+					if ( ( @$_POST[ "update" ] ) == "update" ) {
+						//for updating the record
+						include( "includes/update.php" );
+						stu_record();
 					}
 					?>
 				</div>
@@ -267,22 +218,7 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-	<script type="text/javascript">
-		$( function () {
-			$( '#paid' ).click( function () {
-				if ( $( this ).is( ':checked' ) ) {
-					$( "#payment" ).css( "display", "block" );
-				}
-			} );
-		} );
-		$( function () {
-			$( '#unpaid' ).click( function () {
-				if ( $( this ).is( ':checked' ) ) {
-					$( "#payment" ).css( "display", "none" );
-				}
-			} );
-		} );
-	</script>
+	s
 	<script>
 		$( document ).ready( function () {
 			$( "#about" ).click( function () {
@@ -292,18 +228,12 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 				$( "#about" ).addClass( "active" );
 				$( "#about-ct" ).removeClass( "hidden" );
 			} );
-			$( "#update" ).click( function () {
-				removeActive();
-				hideAll();
-				$( "#update" ).addClass( "is-active" );
-				$( "#update-ct" ).removeClass( "hidden" );
-			} );
 
-			$( "#publish" ).click( function () {
+			$( "#profile" ).click( function () {
 				removeActive();
 				hideAll();
-				$( "#publish" ).addClass( "is-active" );
-				$( "#publish-ct" ).removeClass( "hidden" );
+				$( "#profile" ).addClass( "is-active" );
+				$( "#my-profile" ).removeClass( "hidden" );
 			} );
 
 			$( "#logout" ).click( function () {
@@ -315,16 +245,14 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 
 			function removeActive() {
 				$( "#about" ).removeClass( "is-active" );
-				$( "#update" ).removeClass( "is-active" );
-				$( "#publish" ).removeClass( "is-active" );
+				$( "#profile" ).removeClass( "is-active" );
 				$( "#logout" ).removeClass( "is-active" );
 
 			}
 
 			function hideAll() {
 				$( "#about-ct" ).addClass( "hidden" );
-				$( "#update-ct" ).addClass( "hidden" );
-				$( "#publish-ct" ).addClass( "hidden" );
+				$( "#my-profile" ).addClass( "hidden" );
 				$( "#logout-ct" ).addClass( "hidden" );
 			}
 		} );

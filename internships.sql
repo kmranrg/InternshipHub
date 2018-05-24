@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 24, 2018 at 04:19 AM
+-- Generation Time: May 24, 2018 at 10:59 PM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -50,17 +50,15 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `contact` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `employee`
 --
 
 INSERT INTO `employee` (`id`, `orgname`, `name`, `email`, `password`, `contact`, `city`) VALUES
-(1, 'Apple', 'Steve', 'jobs@apple.com', 'Anurag', '9876543210', 'USA'),
-(2, 'Microsoft', 'Bill', 'bill@gmail.com', 'Anurag', '9876543210', 'UK'),
-(3, 'Amazon', 'Bezos', 'bezos@gmail.com', 'Anurag', '9876543210', 'New Delhi'),
-(4, 'Flipkart', 'Flip', 'flip@kart.com', 'Anurag', '9876543210', 'USA');
+(1, 'Apple', 'Steve Jobs', 'steve@apple.com', 'AppleSteve', '9876543210', 'New York'),
+(2, 'Microsoft', 'Bill Gates', 'bill@microsoft.com', 'MicrosoftBill', '9876543210', 'Cupertino');
 
 -- --------------------------------------------------------
 
@@ -71,7 +69,6 @@ INSERT INTO `employee` (`id`, `orgname`, `name`, `email`, `password`, `contact`,
 DROP TABLE IF EXISTS `internship`;
 CREATE TABLE IF NOT EXISTS `internship` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `views` int(11) NOT NULL,
   `orgname` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -81,17 +78,17 @@ CREATE TABLE IF NOT EXISTS `internship` (
   `salary` int(11) NOT NULL,
   `imglink` varchar(600) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `internship`
 --
 
-INSERT INTO `internship` (`id`, `views`, `orgname`, `title`, `description`, `startdate`, `enddate`, `location`, `salary`, `imglink`) VALUES
-(18, 0, 'Apple', 'Web Development Training', 'The Web Development Training by Internshala is a 6-week online training program in the fields of HTML, CSS,Bootstrap, PHP, and MySQLi. In this training program, you will learn how to create a website.', '14-07-2018', '15-08-2018', 'New Delhi', 2220, '8.png'),
-(19, 0, 'Apple', 'Android Application', 'The online Android app development training is a 6 weeks training program. As part of the training, you will learn how to create an android app by making your own android music player with features like shake to change, visualizer, mark as favorite, etc.', '14-07-2018', '15-07-2018', 'New Delhi', 0, '8.png'),
-(21, 0, 'Microsoft', 'Core Java Training', 'The Core Java Training by Internshala is a 6-weeks online training program covering the basic concepts of Java and Object-Oriented Programming such as arrays, methods, and inheritance, polymorphism, classes etc.', '14-07-2018', '15-07-2018', 'Bengluru', 2220, '12.png'),
-(20, 0, 'Microsoft', 'Python', 'The online training, Programming with Python, is a 6-week training program covering essential concepts on the building blocks of Python, object-oriented programming, the use of SQLite database and development of GUIs for Python applications.', '14-07-2018', '25-09-2018', 'Bengluru', 2000, '12.png');
+INSERT INTO `internship` (`id`, `orgname`, `title`, `description`, `startdate`, `enddate`, `location`, `salary`, `imglink`) VALUES
+(1, 'Apple', 'Web Development', 'The Web Development Training by Internshala is a 6-week online training program in the fields of HTML, CSS,Bootstrap, PHP, and MySQLi. In this training program, you will learn how to create a website.', '14-07-2018', '30-08-2018', 'New Delhi', 2200, '10.jpg'),
+(2, 'Apple', 'Android Application', 'The online Android app development training is a 6 weeks training program. As part of the training, you will learn how to create an android app by making your own android music player with features like shake to change', '19-08-2018', '22-09-2018', 'Bengluru', 3200, '9.jpg'),
+(3, 'Microsoft', 'Core Java', 'The Core Java Training by Internshala is a 6-weeks online training program \r\n covering the basic concepts of Java and Object-Oriented Programming such as\r\n arrays, methods, and inheritance, polymorphism, classes etc.', '17-07-2018', '17-08-2018', 'Kolkata', 4000, '8.jpg'),
+(4, 'Microsoft', 'Advanced Python', 'The online training, Programming with Python, is a 6-week training program covering essential concepts on the building blocks of Python, object-oriented programming, the use of SQLite database and development of GUIs for Python applications.', '22-10-2018', '22-11-2018', 'Hyderabad', 4500, '7.jpg');
 
 -- --------------------------------------------------------
 
@@ -108,14 +105,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `contact` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `student`
---
-
-INSERT INTO `student` (`id`, `name`, `email`, `password`, `contact`, `city`) VALUES
-(1, 'Kumar Anurag', 'kmranrg@gmail.com', 'Anurag', '9983436229', 'New Delhi');
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

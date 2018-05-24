@@ -12,6 +12,7 @@ $data = array();
 <head>
 	<meta charset="utf-8">
 	<title>Internshala</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
 	<style>
@@ -39,25 +40,22 @@ $data = array();
 					echo '</div>  <div class="row">';
 				}
 				?>
-			<div class="col-md-4" style="padding:0px;margin-top:20px;">
+			<div class="col-md-4 col-sm-6" style="padding:0px;margin-top:20px;">
 				<div class="carousel-img">
-					<img src="https://c.wallhere.com/photos/70/bc/Frontside_Misty_Counter_Strike_Global_Offensive_colorful_weapon_military_AKM-55873.jpg!d" width="90%">
+					<img src="img/banners/<?php echo $data[$i]['imglink']; ?>" width="90%">
 				</div>
 				<div class="author">
-					<div class="img_author">
-						<img src="{{asset('images/temp.jpg')}}" width="90%">
-					</div>
 					<span class="auth_name">
                  <h4><strong>          <?php echo $data[$i]['title'];  ?> </strong><br><small><?php echo $data[$i]['orgname']; ?></small> </h4>
               </span>
 				</div>
-				<div class="carousel-content" style="width: 90%">
+				<div class="carousel-content" style="width: 90%;">
 					<h6><strong>Description</strong></h6>
 					<p>
 						<?php echo $data[$i]['description'];  ?>
 					</p>
 					<?php $v = $data[$i]['id']; ?>
-					<a href="internship_details.php?id=<?php echo $v; ?>" name="apply" value="apply" class="btn btn-block btn-primary">Apply Now</a>
+					<a href="internship_details.php?id=<?php echo $v; ?>" name="apply" value="apply" class="btn btn-block btn-primary" style="margin-bottom: 60px;">Apply Now</a>
 				</div>
 
 			</div>
