@@ -1,4 +1,4 @@
-# InternshipProject
+# InternshipHub
 Work for Internshala
 
 SETUP:-				
