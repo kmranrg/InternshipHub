@@ -1,6 +1,6 @@
 <div class="jumbotron" style="position: relative">
 	<div>
-		<img src="img/credentials/logo.png" height="80px" width="200px">
+		<img src="img/credentials/logo.png" height="80px" width="200px" style="margin-left: 20px">
 		<div class="btn-right">
 			<button type="button" id="Login-toggle" class="btn btn-info">Login</button>&nbsp;&nbsp;
 			<div class="dropdown">
@@ -38,7 +38,7 @@
 					<label for="emp-login" class="nav-link" id="emp">Employee</label>
 					<input type="radio" class="hidden" name="usr-category" value="employee" id="emp-login">
 				</li>
-				<li class="nav-item">
+				
 			</ul>
 			<br>
 		</div>

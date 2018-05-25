@@ -34,11 +34,6 @@
 					<input type="radio" name="usr-category" class="hidden" value="student" id="std-login">
 
 				</li>
-				<li class="nav-item">
-					<label for="emp-login" class="nav-link" id="emp">Employee</label>
-					<input type="radio" class="hidden" name="usr-category" value="employee" id="emp-login">
-				</li>
-				<li class="nav-item">
 			</ul>
 			<br>
 		</div>
