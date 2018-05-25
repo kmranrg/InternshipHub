@@ -114,7 +114,7 @@ $intern_res = mysqli_query( $db, "select * from internship where orgname='" . $r
 				<br/><br/><br/><br/><br/><br/><br/>
 				<div class="container" style="color: white">
 					<center>
-						<p>Copyright &copy; Internshala</p>
+						<p>Copyright &copy; Kumar Anurag</p>
 					</center>
 				</div>
 			</ul>
